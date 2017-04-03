@@ -62,5 +62,6 @@
     {!! Form::close() !!} --}}
 
     @include('partials.javascripts')
+    @yield('script')
 </body>
 </html>

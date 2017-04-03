@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Observers;
+namespace App\Http;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use LogicException;
 
-trait SoftDeletes
+trait CascadeSoftDeletes
 {
 
     /**
