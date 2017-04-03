@@ -53,7 +53,7 @@
                             {{ Form::open(['route' => 'home', 'method' => 'GET']) }}
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input type="text" name="kode" class="form-control" placeholder="Masukkan Kode, Contoh: 1234">
+                                        <input type="text" name="kode" class="form-control" placeholder="Masukkan Kode, Contoh: 1234" autofocus="">
                                         <span class="input-group-btn">
                                             <button type="submit" class="btn btn-success">Masuk</button>
                                         </span>

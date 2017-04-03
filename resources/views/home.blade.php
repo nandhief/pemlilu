@@ -69,10 +69,7 @@
                                     <td>{{ $on->name }}</td>
                                     <td>{{ $on->kode }}</td>
                                     <td>
-                                        {{ Form::open(['route' => ['proses', $on->id], 'method' => 'POST']) }}
-                                            {{ Form::hidden('status', '1') }}
-                                            {{ Form::submit(($on->status == 0 ? 'Proses' : ''), ['class' => 'btn btn-xs btn-warning']) }}
-                                        {{ Form::close() }}
+                                        <button class="btn btn-xs btn-warning">{{ $on->status == 0 ? 'Proses' : '' }}</button>
                                     </td>
                                 </tr>
                             @empty
