@@ -11,7 +11,7 @@ class PageController extends Controller
     public function index(Request $request)
     {
     	if (!empty($request->kode) or !is_null($request->kode)) {
-            $mhs = Mahasiswa::where([['status', false], ['kode', $request->kode]])->first();
+            $mhs = Mahasiswa::where([['status', false], ['kode', $request->kode]])->whereGolput(false)->first();
     	} else {
     		$mhs = null;
     	}
@@ -42,12 +42,20 @@ class PageController extends Controller
     public function memilih(Request $request, $calon, $mhs)
     {
         Mahasiswa::find($mhs)->update(['status' => true]);
-        Calon::find($calon)->mahasiswas()->associate(Mahasiswa::find($mhs));
+        Mahasiswa::find($mhs)->calon()->associate(Calon::find($calon))->save();
         return redirect()->route('home');
     }
 
     public function golput(Request $request)
     {
-        dd($request->all());
+        $mhs = Mahasiswa::find($request->id)->update(['golput' => true, 'status' => true]);
+        dd($mhs);
+    }
+
+    public function quick(Request $request)
+    {
+        $memilih = Calon::withCount(['mahasiswas'])->get();
+        $golput = Mahasiswa::whereGolput(true)->get()->count();
+        return view('quick', compact('memilih', 'golput'));
     }
 }

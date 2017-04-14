@@ -111,10 +111,43 @@
                 @endforeach
                 @endif
             </div>
+            @if (!is_null($mhs))
             <h3 class="white text-center">WAKTU MEMILIH</h3>
+            <h3 class="text-center white" id="time"></h3>
+            @endif
         </div>
 
         <script src="{{ asset('assets/js/jquery.js') }}"></script>
         <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+        <script>
+            @if (!is_null($mhs))
+            function startTimer(duration, display) {
+                var timer = duration, minutes, seconds;
+                setInterval(function () {
+                    minutes = parseInt(timer / 60, 10);
+                    seconds = parseInt(timer % 60, 10);
+                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
+                    display.textContent = minutes + ":" + seconds;
+                    if (--timer < 0) {
+                        timer = duration;
+                    }
+                }, 1000);
+            }
+            window.onload = function () {
+                var menitan = 60 * 1,
+                    display = document.querySelector('#time');
+                startTimer(menitan, display);
+            };
+            $(document).ready(function () {
+                setTimeout(function () {
+                    $.post("{{ route('golput') }}", {id: "{{ $mhs->id }}"});
+                    setTimeout(function () {
+                        window.location.href = "{{ route('home') }}";
+                    }, 2000);
+                }, 58000);
+            });
+            @endif
+        </script>
     </body>
 </html>

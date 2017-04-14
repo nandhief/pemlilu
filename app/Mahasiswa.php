@@ -12,6 +12,6 @@ class Mahasiswa extends Model
 
     public function calon()
     {
-    	return $this->hasMany(Calon::class);
+    	return $this->belongsTo(Calon::class);
     }
 }

@@ -3,7 +3,7 @@
 @section('content')
     <h3 class="page-title">Dashboard</h3>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Daftar Pemilih</div>
 
@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-sm-6 col-xs-6">
+        <div class="col-md-6 col-sm-6">
             <div class="panel panel-info">
                 <div class="panel-heading">Proses memilih</div>
                 <div class="panel-body">
@@ -83,7 +83,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-sm-6 col-xs-6">
+        <div class="col-md-6 col-sm-6">
             <div class="panel panel-success">
                 <div class="panel-heading">Sudah memilih</div>
                 <div class="panel-body">

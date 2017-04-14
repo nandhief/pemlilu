@@ -15,14 +15,14 @@ Route::get('/', 'PageController@index')->name('home');
 Route::post('antri/{id}', 'PageController@antri')->name('antri');
 Route::post('proses/{id}', 'PageController@antri')->name('proses');
 Route::post('memilih/{calon}/{mhs}', 'PageController@memilih')->name('memilih');
+Route::post('golput', 'PageController@golput')->name('golput');
 
 Route::group(['prefix' => 'dashboard'], function () {
 	Route::get('/', 'PageController@dashboard')->name('dashboard');
+	Route::get('quick-count', 'PageController@quick')->name('quick');
 	Route::resource('calons', 'CalonController');
 	Route::resource('mhs', 'MhsController');
 });
 
-Route::get('test/{first}/{second}', function (\Illuminate\Http\Request $request, $first, $second) {
-	dd($request->all(), $first, $second);
-});
+
 

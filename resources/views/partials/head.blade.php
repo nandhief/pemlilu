@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <title>
-    Quickadmin
+    Admin
 </title>
 
 <meta http-equiv="X-UA-Compatible"

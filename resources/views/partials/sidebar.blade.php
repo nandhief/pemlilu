@@ -6,25 +6,25 @@
             data-auto-scroll="true"
             data-slide-speed="200">
             
-            <li class="{{ $request->segment(1) == 'home' ? 'active' : '' }}">
+            <li class="{{ $request->segment(1) == 'dashboard' ? 'active' : '' }}">
                 <a href="{{ route('dashboard') }}">
                     <i class="fa fa-wrench"></i>
                     <span class="title">@lang('quickadmin.dashboard')</span>
                 </a>
             </li>
-            <li class="{{ $request->segment(1) == 'count' ? 'active' : '' }}">
-                <a href="{{ route('dashboard') }}">
+            <li class="{{ $request->segment(2) == 'quick*' ? 'active' : '' }}">
+                <a href="{{ route('quick') }}">
                     <i class="fa fa-history"></i>
                     <span class="title">Quick Count</span>
                 </a>
             </li>
-            <li class="{{ $request->segment(1) == 'calons' ? 'active' : '' }}">
+            <li class="{{ $request->segment(2) == 'calons' ? 'active' : '' }}">
                 <a href="{{ route('calons.index') }}">
                     <i class="fa fa-user"></i>
                     <span class="title">Calons</span>
                 </a>
             </li>
-            <li class="{{ $request->segment(1) == 'mhs' ? 'active' : '' }}">
+            <li class="{{ $request->segment(2) == 'mhs' ? 'active' : '' }}">
                 <a href="{{ route('mhs.index') }}">
                     <i class="fa fa-list-alt"></i>
                     <span class="title">Mahasiswa</span>
