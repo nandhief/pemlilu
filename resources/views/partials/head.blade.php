@@ -28,9 +28,9 @@
 <link rel="stylesheet"
       href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet"
-      href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css"/>
+      href="{{ asset('datatables') }}/css/jquery.dataTables.min.css"/>
 <link rel="stylesheet"
-      href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css"/>
+      href="{{ asset('datatables/extension/') }}/css/select.dataTables.min.css"/>
 <link rel="stylesheet"
       href="//cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css"/>
 <link rel="stylesheet"

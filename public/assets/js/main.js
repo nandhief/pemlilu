@@ -9,8 +9,10 @@ $(document).ready(function () {
     window.dtDefaultOptions = {
         retrieve: true,
         dom: 'Bfrtip<"actions">',
-        columnDefs: [],
-        "iDisplayLength": 20,
+        columnDefs: [
+            
+        ],
+        "iDisplayLength": 10,
         "aaSorting": [],
         buttons: [
             {

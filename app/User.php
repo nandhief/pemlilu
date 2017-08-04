@@ -30,8 +30,14 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function setPasswordAttribute($input)
+    {
+        if ($input)
+            $this->attributes['password'] = app('hash')->needsRehash($input) ? \Hash::make($input) : $input;
+    }
+
     public function roles()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class)->first();
     }
 }

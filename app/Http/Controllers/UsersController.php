@@ -17,9 +17,6 @@ class UsersController extends Controller
      */
     public function index()
     {
-        if (! Gate::allows('user_access')) {
-            return abort(401);
-        }
         $users = User::all();
 
         return view('users.index', compact('users'));
@@ -32,9 +29,6 @@ class UsersController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('user_create')) {
-            return abort(401);
-        }
         $relations = [
             'roles' => \App\Role::get()->pluck('title', 'id')->prepend('Please select', ''),
         ];
@@ -48,12 +42,10 @@ class UsersController extends Controller
      * @param  \App\Http\Requests\StoreUsersRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUsersRequest $request)
+    public function store(Request $request)
     {
-        if (! Gate::allows('user_create')) {
-            return abort(401);
-        }
         $user = User::create($request->all());
+        $user->roles()->attach($request->role_id);
 
         return redirect()->route('users.index');
     }
@@ -67,9 +59,6 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        if (! Gate::allows('user_edit')) {
-            return abort(401);
-        }
         $relations = [
             'roles' => \App\Role::get()->pluck('title', 'id')->prepend('Please select', ''),
         ];
@@ -86,13 +75,11 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUsersRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        if (! Gate::allows('user_edit')) {
-            return abort(401);
-        }
         $user = User::findOrFail($id);
         $user->update($request->all());
+        $user->roles()->attach($request->role_id);
 
         return redirect()->route('users.index');
     }
@@ -106,9 +93,6 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        if (! Gate::allows('user_view')) {
-            return abort(401);
-        }
         $relations = [
             'roles' => \App\Role::get()->pluck('title', 'id')->prepend('Please select', ''),
         ];
@@ -127,9 +111,6 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        if (! Gate::allows('user_delete')) {
-            return abort(401);
-        }
         $user = User::findOrFail($id);
         $user->delete();
 
@@ -143,9 +124,6 @@ class UsersController extends Controller
      */
     public function massDestroy(Request $request)
     {
-        if (! Gate::allows('user_delete')) {
-            return abort(401);
-        }
         if ($request->input('ids')) {
             $entries = User::whereIn('id', $request->input('ids'))->get();
 

@@ -21,21 +21,28 @@ class PageController extends Controller
 
     public function dashboard()
     {
-        $mahasiswa = Mahasiswa::whereNull('kode')->whereNull('status')->get();
-        $onprogres = Mahasiswa::whereNotNull('kode')->where([['status', false]])->orderBy('updated_at', 'asc')->get();
+        $mahasiswa = Mahasiswa::whereNull('kode')->get();
+        $onprogres = Mahasiswa::whereNotNull('kode')->whereNull('status')->orderBy('updated_at', 'asc')->get();
+        $kode = Mahasiswa::whereNotNull('kode')->where([['status', false]])->orderBy('updated_at', 'asc')->get();
         $selesai = Mahasiswa::whereNotNull('kode')->where([['status', true]])->orderBy('updated_at', 'desc')->get();
-        return view('home', compact('mahasiswa', 'onprogres', 'selesai'));
+        return view('home', compact('mahasiswa', 'kode', 'onprogres', 'selesai'));
     }
 
     public function antri(Request $request, $id)
     {
-        Mahasiswa::find($id)->update($request->all());
+        $mhs = Mahasiswa::find($id);
+        $kode = strtolower(str_random(3));
+        do {
+            $kode = Mahasiswa::whereKode($kode)->first() ? strtolower(str_random(3)) : $kode;
+        } while (count(Mahasiswa::whereKode($kode)->first()) == 1);
+        $mhs->kode = $kode;
+        $mhs->save();
         return redirect()->back();
     }
 
     public function proses(Request $request, $id)
     {
-        Mahasiswa::find($id)->update($request->all());
+        $mhs = Mahasiswa::find($id)->update(['status' => false]);
         return redirect()->back();
     }
 

@@ -36,6 +36,9 @@
                 background-color: rgba(255,255,255, 0.1);
                 border-radius: 0px;
             }
+            .height {
+                height: auto;
+            }
         </style>
     </head>
     <body>
@@ -47,19 +50,42 @@
         <div class="container">
             <div class="row">
                 @if (is_null($mhs))
-                <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-4 col-sm-4 col-xs-12">
                     <div class="panel panel-default">
-                        <div class="panel-body">
+                        <div class="panel-body height">
+                            <h3 class="white text-center" style="border-bottom: 1px solid #fff;">Lorem ipsum dolor.</h3>
                             {{ Form::open(['route' => 'home', 'method' => 'GET']) }}
                                 <div class="form-group">
-                                    <div class="input-group">
+                                    {{-- <div class="input-group"> --}}
                                         <input type="text" name="kode" class="form-control" placeholder="Masukkan Kode, Contoh: 1234" autofocus="">
-                                        <span class="input-group-btn">
+                                        {{-- <span class="input-group-btn">
                                             <button type="submit" class="btn btn-success">Masuk</button>
                                         </span>
-                                    </div>
+                                    </div> --}}
+                                </div>
+                                <div class="form-group">
+                                    {{-- <div class="input-group">
+                                        <input type="text" name="kode" class="form-control" placeholder="Masukkan Kode, Contoh: 1234" autofocus="">
+                                        <span class="input-group-btn"> --}}
+                                            <button type="submit" class="btn btn-success">Masuk</button>
+                                        {{-- </span>
+                                    </div> --}}
                                 </div>
                             {{ Form::close() }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body height white">
+                            <h3 style="border-bottom: 1px solid #fff;">Lorem ipsum dolor sit amet.</h3>
+                            <ol>
+                                <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto ducimus distinctio consequuntur, ipsam aperiam, hic similique. Rerum quos id officiis, repellendus! Aperiam vitae ipsa quisquam non animi cupiditate facilis nostrum?</li>
+                                <li>Dicta voluptatibus commodi dolorum aliquid odit dolore temporibus quidem tempora doloribus rerum tempore, natus omnis voluptas architecto aperiam, molestias dolor earum aspernatur voluptate. Eum aperiam, repellendus in iure, sed consequuntur.</li>
+                                <li>Labore ex, quos ut autem aspernatur reprehenderit, sed eligendi, fuga eum maiores sapiente fugiat libero corporis perferendis dolor quibusdam natus? Molestias aliquam voluptas omnis, aliquid quisquam dolorum rem reiciendis assumenda!</li>
+                                <li>Enim similique itaque saepe quae porro magnam quibusdam rerum ipsa fuga aut, natus laborum totam ipsum aliquid maiores alias dolor, debitis quasi ut laudantium. Tempora asperiores, magnam temporibus accusantium officiis.</li>
+                                <li>Illum impedit expedita, aliquam, quod ducimus quaerat assumenda aperiam quam, dicta incidunt totam modi quae nobis quos provident error! Sapiente maiores enim in porro dignissimos vel autem fugiat, voluptas consequuntur.</li>
+                            </ol>
                         </div>
                     </div>
                 </div>
@@ -94,6 +120,16 @@
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         <h3 class="modal-title text-center" id="modal{{ $calon->id }}Label">Anda Yakin Memilih No {{ $no }}</h3>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6">
+                                                <img src="{{ asset('uploads/'.$calon->image) }}" alt="" class="img-responsive">
+                                            </div>
+                                            <div class="col-md-6 col-sm-6">
+                                                <img src="{{ asset('uploads/'.$calon->wimage) }}" alt="" class="img-responsive">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-default" type="button" data-dismiss="modal">Batal</button>

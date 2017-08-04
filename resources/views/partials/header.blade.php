@@ -1,7 +1,7 @@
 <div class="page-header-inner">
     <div class="page-header-inner">
         <div class="navbar-header">
-            <a href="{{ url('/') }}"
+            <a href="{{ route('dashboard') }}"
                class="navbar-brand">
                 Admin
             </a>

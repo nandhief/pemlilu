@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">Dashboard</h3>
     <div class="row">
+        @if(strtolower(auth()->user()->roles()->title) == 'verifikasi')
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Daftar Pemilih</div>
+                <div class="panel-heading">Verifikasi Pemilih</div>
 
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -26,9 +26,7 @@
                                     <td>{{ $mhs->fakultas }}</td>
                                     <td>
                                         {{ Form::open(['route' => ['antri', $mhs->id], 'method' => 'POST']) }}
-                                            {{ Form::hidden('kode', strtolower(str_random(2))) }}
-                                            {{ Form::hidden('status', '0') }}
-                                            {{ Form::submit((is_null($mhs->status) ? 'Antri' : ''), ['class' => 'btn btn-xs btn-info']) }}
+                                            {{ Form::submit('Antri', ['class' => 'btn btn-xs btn-info']) }}
                                         {{ Form::close() }}
                                     </td>
                                 </tr>
@@ -43,9 +41,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-sm-6">
+        @endif
+        @if(strtolower(auth()->user()->roles()->title) == 'antrian')
+        <div class="col-md-12">
             <div class="panel panel-info">
-                <div class="panel-heading">Proses memilih</div>
+                <div class="panel-heading">Antrian Pemilih</div>
                 <div class="panel-body">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover {{ $onprogres->count() > 0 ? 'datatables' : '' }}">
@@ -62,14 +62,16 @@
                             @php
                                 $no = 1;
                             @endphp
-                            @forelse ($onprogres as $on)
+                            @forelse ($onprogres as $onp)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td>{{ $on->nim }}</td>
-                                    <td>{{ $on->name }}</td>
-                                    <td>{{ $on->kode }}</td>
+                                    <td>{{ $onp->nim }}</td>
+                                    <td>{{ $onp->name }}</td>
+                                    <td>{{ $onp->kode }}</td>
                                     <td>
-                                        <button class="btn btn-xs btn-warning">{{ $on->status == 0 ? 'Proses' : '' }}</button>
+                                        {{ Form::open(['route' => ['proses', $onp->id], 'method' => 'POST']) }}
+                                            {{ Form::submit('Memilih', ['class' => 'btn btn-xs btn-success']) }}
+                                        {{ Form::close() }}
                                     </td>
                                 </tr>
                             @empty
@@ -83,9 +85,121 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-sm-6">
+        @endif
+        @if(strtolower(auth()->user()->roles()->title) == 'pengawas' || strtolower(auth()->user()->roles()->title) == 'administrator')
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Verifikasi Pemilih</div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover {{ $mahasiswa->count() > 0 ? 'datatables' : '' }}">
+                            <thead>
+                                <tr>
+                                    <th>NIM</th>
+                                    <th>NAMA</th>
+                                    <th>FAKULTAS</th>
+                                    <th>INFO</th>
+                                </tr>
+                            </thead>
+                            <tbdoy>
+                                @forelse ($mahasiswa as $mhs)
+                                <tr>
+                                    <td>{{ $mhs->nim }}</td>
+                                    <td>{{ $mhs->name }}</td>
+                                    <td>{{ $mhs->fakultas }}</td>
+                                    <td>
+                                        {{ Form::open(['route' => ['antri', $mhs->id], 'method' => 'POST']) }}
+                                            {{ Form::submit('Antri', ['class' => 'btn btn-xs btn-info']) }}
+                                        {{ Form::close() }}
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="5">Tidak ada data</td>
+                                </tr>
+                                @endforelse
+                            </tbdoy>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">Antrian Pemilih</div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover {{ $onprogres->count() > 0 ? 'datatables' : '' }}">
+                            <thead>
+                                <tr>
+                                    <th>NIM</th>
+                                    <th>NAMA</th>
+                                    <th>KODE</th>
+                                    <th>INFO</th>
+                                </tr>
+                            </thead>
+                            <tbdoy>
+                            @forelse ($onprogres as $onp)
+                                <tr>
+                                    <td>{{ $onp->nim }}</td>
+                                    <td>{{ $onp->name }}</td>
+                                    <td>{{ $onp->kode }}</td>
+                                    <td>
+                                        {{ Form::open(['route' => ['proses', $onp->id], 'method' => 'POST']) }}
+                                            {{ Form::submit('Memilih', ['class' => 'btn btn-xs btn-success']) }}
+                                        {{ Form::close() }}
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6">Tidak ada data</td>
+                                </tr>
+                            @endforelse
+                            </tbdoy>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
             <div class="panel panel-success">
-                <div class="panel-heading">Sudah memilih</div>
+                <div class="panel-heading">Status Pemilih</div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover {{ $kode->count() > 0 ? 'datatables' : '' }}">
+                            <thead>
+                                <tr>
+                                    <th>NIM</th>
+                                    <th>NAMA</th>
+                                    <th>KODE</th>
+                                    <th>INFO</th>
+                                </tr>
+                            </thead>
+                            <tbdoy>
+                            @forelse ($kode as $kd)
+                                <tr>
+                                    <td>{{ $kd->nim }}</td>
+                                    <td>{{ $kd->name }}</td>
+                                    <td>{{ $kd->kode }}</td>
+                                    <td>
+                                        <button class="btn btn-xs btn-warning">{{ $kd->status == 0 ? 'Proses' : '' }}</button>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6">Tidak ada data</td>
+                                </tr>
+                            @endforelse
+                            </tbdoy>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Sudah Memilih</div>
                 <div class="panel-body">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover {{ $selesai->count() > 0 ? 'datatables' : '' }}">
@@ -98,19 +212,17 @@
                                     <th>INFO</th>
                                 </tr>
                             </thead>
-                            <tbdoy>
+                            <tbody>
                             @php
-                                $no1 = 1;
+                                $no = 1;
                             @endphp
-                            @forelse ($selesai as $done)
+                            @forelse ($selesai as $finish)
                                 <tr>
-                                    <td>{{ $no1++ }}</td>
-                                    <td>{{ $done->nim }}</td>
-                                    <td>{{ $done->name }}</td>
-                                    <td>{{ $done->fakultas }}</td>
-                                    <td>
-                                        <button class="btn btn-xs btn-success">{{ $done->status == 1 ? 'Memilih' : '' }}</button>
-                                    </td>
+                                    <td>{{ $no++ }}</td>
+                                    <td>{{ $finish->nim }}</td>
+                                    <td>{{ $finish->name }}</td>
+                                    <td>{{ $finish->fakultas }}</td>
+                                    <td><div class="label label-success">Selesai</div> {{ $finish->updated_at }}</td>
                                 </tr>
                             @empty
                                 <tr>
@@ -118,11 +230,13 @@
                                 </tr>
                             @endforelse
                             </tbdoy>
+                            </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
+        @endif
     </div>
 @endsection
 
