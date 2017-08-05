@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        @if(strtolower(auth()->user()->roles()->title) == 'verifikasi')
+        @if(strtolower(auth()->user()->roles()->first()->title) == 'verifikasi')
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Verifikasi Pemilih</div>
@@ -12,6 +12,7 @@
                         <table class="table table-striped table-hover {{ $mahasiswa->count() > 0 ? 'datatables' : '' }}">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>NIM</th>
                                     <th>NAMA</th>
                                     <th>FAKULTAS</th>
@@ -19,8 +20,12 @@
                                 </tr>
                             </thead>
                             <tbdoy>
+                                @php
+                                    $no = 1;
+                                @endphp
                                 @forelse ($mahasiswa as $mhs)
                                 <tr>
+                                    <td>{{ $no++ }}</td>
                                     <td>{{ $mhs->nim }}</td>
                                     <td>{{ $mhs->name }}</td>
                                     <td>{{ $mhs->fakultas }}</td>
@@ -42,7 +47,7 @@
             </div>
         </div>
         @endif
-        @if(strtolower(auth()->user()->roles()->title) == 'antrian')
+        @if(strtolower(auth()->user()->roles()->first()->title) == 'antrian')
         <div class="col-md-12">
             <div class="panel panel-info">
                 <div class="panel-heading">Antrian Pemilih</div>
@@ -86,7 +91,7 @@
             </div>
         </div>
         @endif
-        @if(strtolower(auth()->user()->roles()->title) == 'pengawas' || strtolower(auth()->user()->roles()->title) == 'administrator')
+        @if(strtolower(auth()->user()->roles()->first()->title) == 'pengawas' || strtolower(auth()->user()->roles()->first()->title) == 'administrator')
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Verifikasi Pemilih</div>
@@ -96,6 +101,7 @@
                         <table class="table table-striped table-hover {{ $mahasiswa->count() > 0 ? 'datatables' : '' }}">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>NIM</th>
                                     <th>NAMA</th>
                                     <th>FAKULTAS</th>
@@ -103,8 +109,12 @@
                                 </tr>
                             </thead>
                             <tbdoy>
+                                @php
+                                    $no = 1;
+                                @endphp
                                 @forelse ($mahasiswa as $mhs)
                                 <tr>
+                                    <td>{{ $no++ }}</td>
                                     <td>{{ $mhs->nim }}</td>
                                     <td>{{ $mhs->name }}</td>
                                     <td>{{ $mhs->fakultas }}</td>
@@ -133,6 +143,7 @@
                         <table class="table table-striped table-hover {{ $onprogres->count() > 0 ? 'datatables' : '' }}">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>NIM</th>
                                     <th>NAMA</th>
                                     <th>KODE</th>
@@ -140,8 +151,12 @@
                                 </tr>
                             </thead>
                             <tbdoy>
+                            @php
+                                $no = 1;
+                            @endphp
                             @forelse ($onprogres as $onp)
                                 <tr>
+                                    <td>{{ $no++ }}</td>
                                     <td>{{ $onp->nim }}</td>
                                     <td>{{ $onp->name }}</td>
                                     <td>{{ $onp->kode }}</td>
@@ -170,6 +185,7 @@
                         <table class="table table-striped table-hover {{ $kode->count() > 0 ? 'datatables' : '' }}">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>NIM</th>
                                     <th>NAMA</th>
                                     <th>KODE</th>
@@ -177,8 +193,12 @@
                                 </tr>
                             </thead>
                             <tbdoy>
+                            @php
+                                $no = 1;
+                            @endphp
                             @forelse ($kode as $kd)
                                 <tr>
+                                    <td>{{ $no++ }}</td>
                                     <td>{{ $kd->nim }}</td>
                                     <td>{{ $kd->name }}</td>
                                     <td>{{ $kd->kode }}</td>

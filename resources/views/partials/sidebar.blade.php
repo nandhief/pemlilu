@@ -11,7 +11,7 @@
                     <span class="title">@lang('quickadmin.dashboard')</span>
                 </a>
             </li>
-            @if(strtolower(auth()->user()->roles()->title) == 'administrator')
+            @if(strtolower(auth()->user()->roles()->first()->title) == 'administrator')
             <li class="{{ $request->segment(2) == 'quick-count' ? 'active' : '' }}">
                 <a href="{{ route('quick') }}">
                     <i class="fa fa-history"></i>
@@ -19,7 +19,7 @@
                 </a>
             </li>
             @endif
-            @if(strtolower(auth()->user()->roles()->title) == 'pengawas' || strtolower(auth()->user()->roles()->title) == 'administrator')
+            @if(strtolower(auth()->user()->roles()->first()->title) == 'pengawas' || strtolower(auth()->user()->roles()->first()->title) == 'administrator')
             <li class="{{ $request->segment(2) == 'calons' ? 'active' : '' }}">
                 <a href="{{ route('calons.index') }}">
                     <i class="fa fa-user"></i>
@@ -27,7 +27,7 @@
                 </a>
             </li>
             @endif
-            @if(strtolower(auth()->user()->roles()->title) == 'pengawas' || strtolower(auth()->user()->roles()->title) == 'administrator')
+            @if(strtolower(auth()->user()->roles()->first()->title) == 'pengawas' || strtolower(auth()->user()->roles()->first()->title) == 'administrator')
             <li class="{{ $request->segment(2) == 'mhs' ? 'active' : '' }}">
                 <a href="{{ route('mhs.index') }}">
                     <i class="fa fa-list-alt"></i>
@@ -35,7 +35,7 @@
                 </a>
             </li>
             @endif
-            @if(strtolower(auth()->user()->roles()->title) == 'administrator')
+            @if(strtolower(auth()->user()->roles()->first()->title) == 'administrator')
             <li class="">
                 <a href="#">
                     <i class="fa fa-users"></i>

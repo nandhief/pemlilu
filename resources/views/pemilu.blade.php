@@ -2,9 +2,12 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        @if (is_null($mhs))
+        <meta http-equiv="refresh" content="120">
+        @endif
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Pemilu Raya Universitas Semarang</title>
+        <title>Komisi Pemilihan Raya Mahasiswa Universitas Semarang</title>
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
         <style>
             body {
@@ -42,9 +45,9 @@
         </style>
     </head>
     <body>
-        <h1 class="text-center white" style="margin: 10px auto; padding-top: 15px; padding-bottom: 5px;"> PEMILU RAYA UNIVERSITAS SEMARANG </h1>
+        <h1 class="text-center white" style="margin: 10px auto; padding-top: 15px; padding-bottom: 5px;">KOMISI PEMILIHAN RAYA MAHASISWA<br> UNIVERSITAS SEMARANG</h1>
         <hr class="white">
-        <h2 class="white text-center"><strong style="border-bottom: 1px solid #fff;">SELAMAT DATANG</strong></h2>
+        {{-- <h2 class="white text-center"><strong style="border-bottom: 1px solid #fff;">SELAMAT DATANG</strong></h2> --}}
         <p class="white text-center" style="font-weight: 700; font-size: 18px;"><span style="border-bottom: 1px solid #fff;">{{ is_null($mhs) ? '' : $mhs->name }}</span></p>
         {{-- <h4 class="white text-center"><strong>Gunakan HAK Suara Anda Untuk Memilih</strong></h4> --}}
         <div class="container">
@@ -53,7 +56,7 @@
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     <div class="panel panel-default">
                         <div class="panel-body height">
-                            <h3 class="white text-center" style="border-bottom: 1px solid #fff;">Lorem ipsum dolor.</h3>
+                            <h3 class="white text-center" style="border-bottom: 1px solid #fff;">Kode Pemilih</h3>
                             {{ Form::open(['route' => 'home', 'method' => 'GET']) }}
                                 <div class="form-group">
                                     {{-- <div class="input-group"> --}}
@@ -67,7 +70,7 @@
                                     {{-- <div class="input-group">
                                         <input type="text" name="kode" class="form-control" placeholder="Masukkan Kode, Contoh: 1234" autofocus="">
                                         <span class="input-group-btn"> --}}
-                                            <button type="submit" class="btn btn-success">Masuk</button>
+                                            <button type="submit" class="btn btn-success btn-block">Masuk</button>
                                         {{-- </span>
                                     </div> --}}
                                 </div>
@@ -78,7 +81,7 @@
                 <div class="col-md-8 col-sm-8 col-xs-12">
                     <div class="panel panel-default">
                         <div class="panel-body height white">
-                            <h3 style="border-bottom: 1px solid #fff;">Lorem ipsum dolor sit amet.</h3>
+                            <h3 style="border-bottom: 1px solid #fff;">Tata Cara Pemilihan</h3>
                             <ol>
                                 <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto ducimus distinctio consequuntur, ipsam aperiam, hic similique. Rerum quos id officiis, repellendus! Aperiam vitae ipsa quisquam non animi cupiditate facilis nostrum?</li>
                                 <li>Dicta voluptatibus commodi dolorum aliquid odit dolore temporibus quidem tempora doloribus rerum tempore, natus omnis voluptas architecto aperiam, molestias dolor earum aspernatur voluptate. Eum aperiam, repellendus in iure, sed consequuntur.</li>
@@ -171,7 +174,7 @@
                 }, 1000);
             }
             window.onload = function () {
-                var menitan = 60 * 1,
+                var menitan = 15 * 1,
                     display = document.querySelector('#time');
                 startTimer(menitan, display);
             };
@@ -181,7 +184,7 @@
                     setTimeout(function () {
                         window.location.href = "{{ route('home') }}";
                     }, 2000);
-                }, 58000);
+                }, 13000);
             });
             @endif
         </script>
