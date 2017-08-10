@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">@lang('quickadmin.users.title')</h3>
+    <h3 class="page-title">Mahasiswa</h3>
     {!! Form::model($mhs, ['method' => 'PUT', 'route' => ['mhs.update', $mhs->id]]) !!}
     <div class="panel panel-default">
         <div class="panel-heading">

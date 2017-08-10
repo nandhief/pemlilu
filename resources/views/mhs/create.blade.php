@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">Calons</h3>
+    <h3 class="page-title">Mahasiswa</h3>
     {!! Form::open(['method' => 'POST', 'route' => ['mhs.store']]) !!}
 
     <div class="panel panel-default">

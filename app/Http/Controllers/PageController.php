@@ -5,13 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Calon;
 use App\Mahasiswa;
+use App\Setting;
 
 class PageController extends Controller
 {
     public function index(Request $request)
     {
-    	if (!empty($request->kode) or !is_null($request->kode)) {
+    	if (!empty($request->kode)) {
             $mhs = Mahasiswa::where([['status', false], ['kode', $request->kode]])->whereGolput(false)->first();
+            if (empty($mhs)) {
+                $data = Mahasiswa::where('kode', $request->kode)->whereGolput(false)->first();
+                session()->flash('error', 'Mohon reload browser');
+                if (empty($data)) {
+                    session()->flash('error', 'Kode salah');
+                }
+            }
     	} else {
     		$mhs = null;
     	}
@@ -64,5 +72,10 @@ class PageController extends Controller
         $memilih = Calon::withCount(['mahasiswas'])->get();
         $golput = Mahasiswa::whereGolput(true)->get()->count();
         return view('quick', compact('memilih', 'golput'));
+    }
+
+    public function setting(Request $request)
+    {
+        # code...
     }
 }

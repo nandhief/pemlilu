@@ -36,11 +36,14 @@
                 margin: 0px auto;
             }
             .panel {
-                background-color: rgba(255,255,255, 0.1);
+                background-color: rgba(0, 0, 0, 0.5);
                 border-radius: 0px;
             }
             .height {
                 height: auto;
+            }
+            .form-control, .alert, .btn {
+                border-radius: 0px;
             }
         </style>
     </head>
@@ -54,25 +57,21 @@
             <div class="row">
                 @if (is_null($mhs))
                 <div class="col-md-4 col-sm-4 col-xs-12">
+                @if (session()->has('error'))
+                    <div class="alert alert-danger alert-dismissable fade in">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Error!</strong> {{ session()->get('error') }}.
+                    </div>
+                @endif
                     <div class="panel panel-default">
                         <div class="panel-body height">
                             <h3 class="white text-center" style="border-bottom: 1px solid #fff;">Kode Pemilih</h3>
                             {{ Form::open(['route' => 'home', 'method' => 'GET']) }}
                                 <div class="form-group">
-                                    {{-- <div class="input-group"> --}}
-                                        <input type="text" name="kode" class="form-control" placeholder="Masukkan Kode, Contoh: 1234" autofocus="">
-                                        {{-- <span class="input-group-btn">
-                                            <button type="submit" class="btn btn-success">Masuk</button>
-                                        </span>
-                                    </div> --}}
+                                    <input type="text" name="kode" class="form-control" placeholder="Masukkan Kode, Contoh: 1234" autofocus="" required title="Mohon Diisi">
                                 </div>
                                 <div class="form-group">
-                                    {{-- <div class="input-group">
-                                        <input type="text" name="kode" class="form-control" placeholder="Masukkan Kode, Contoh: 1234" autofocus="">
-                                        <span class="input-group-btn"> --}}
-                                            <button type="submit" class="btn btn-success btn-block">Masuk</button>
-                                        {{-- </span>
-                                    </div> --}}
+                                    <button type="submit" class="btn btn-success btn-block">Masuk</button>
                                 </div>
                             {{ Form::close() }}
                         </div>
@@ -178,15 +177,23 @@
                     display = document.querySelector('#time');
                 startTimer(menitan, display);
             };
+            @endif
             $(document).ready(function () {
+                $(".alert").fadeTo(4000, 1).slideUp(500, function () {
+                    $(this).slideUp(500);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+                });
+                @if (!is_null($mhs))
                 setTimeout(function () {
                     $.post("{{ route('golput') }}", {id: "{{ $mhs->id }}"});
                     setTimeout(function () {
                         window.location.href = "{{ route('home') }}";
                     }, 2000);
                 }, 13000);
-            });
             @endif
+            });
         </script>
     </body>
 </html>

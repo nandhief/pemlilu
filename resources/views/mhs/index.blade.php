@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3 class="page-title">Calons</h3>
+    <h3 class="page-title">Mahasiswa</h3>
     <p>
         <a href="{{ route('mhs.create') }}" class="btn btn-success">@lang('quickadmin.add_new')</a>
     </p>
