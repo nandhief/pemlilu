@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('meta')
+    <meta http-equiv="refresh" content="60">
+@stop
+
 @section('content')
     <div class="row">
         @if(strtolower(auth()->user()->roles()->first()->title) == 'verifikasi')

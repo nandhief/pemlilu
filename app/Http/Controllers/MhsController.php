@@ -36,11 +36,20 @@ class MhsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'nim' => 'required',
-        ]);
-        $mhs = Mahasiswa::create($request->all());
+        if ($request->hasFile('mhs')) {
+            $data = \Excel::load($request->mhs, function () {})->get();
+            foreach ($data->toArray() as $res) {
+                Mahasiswa::create($res);
+            }
+            session()->flash('message', 'Berhasil Import data mahasiswa');
+        } else {
+            $this->validate($request, [
+                'name' => 'required',
+                'nim' => 'required',
+            ]);
+            $mhs = Mahasiswa::create($request->all());
+            session()->flash('message', 'Berhasil simpan data mahasiswa');
+        }
         return redirect()->route('mhs.index');
     }
 

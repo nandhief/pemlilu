@@ -73,9 +73,4 @@ class PageController extends Controller
         $golput = Mahasiswa::whereGolput(true)->get()->count();
         return view('quick', compact('memilih', 'golput'));
     }
-
-    public function setting(Request $request)
-    {
-        # code...
-    }
 }

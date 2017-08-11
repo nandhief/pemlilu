@@ -2,6 +2,14 @@
 
 @section('content')
     <h3 class="page-title">Mahasiswa</h3>
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#insert" data-toggle="tab">Tambah</a></li>
+        <li><a href="#import" data-toggle="tab">Import</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="insert" class="tab-pane fade in active">
     {!! Form::open(['method' => 'POST', 'route' => ['mhs.store']]) !!}
 
     <div class="panel panel-default">
@@ -44,5 +52,19 @@
 
     {!! Form::submit(trans('quickadmin.save'), ['class' => 'btn btn-danger']) !!}
     {!! Form::close() !!}
+        </div>
+        <div id="import" class="tab-pane fade in">
+            <br>
+            {!! Form::open(['method' => 'POST', 'route' => ['mhs.store'], 'files' => 'true']) !!}
+                <div class="form-group">
+                    <label for="">Import File</label>
+                    <input type="file" name="mhs" id="mhs">
+                </div>
+                <div class="form-group">
+                    <button type="submit" name="simpan" class="btn btn-danger"><i class="fa fa-upload"></i> Import</button>
+                </div>
+            {!! Form::close() !!}
+        </div>
+    </div>
 @stop
 

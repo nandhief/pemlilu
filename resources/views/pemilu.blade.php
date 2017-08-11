@@ -1,3 +1,5 @@
+@inject('set', 'App\Setting')
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -7,7 +9,7 @@
         @endif
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Komisi Pemilihan Raya Mahasiswa Universitas Semarang</title>
+        <title>{{ ucwords($set->whereName('title')->first()->value) }}</title>
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
         <style>
             body {
@@ -33,6 +35,7 @@
                 color: #fff;
             }
             .tengah {
+                width: 200px;
                 margin: 0px auto;
             }
             .panel {
@@ -45,13 +48,16 @@
             .form-control, .alert, .btn {
                 border-radius: 0px;
             }
+            .content {
+                line-height: 1.5;
+            }
         </style>
     </head>
     <body>
-        <h1 class="text-center white" style="margin: 10px auto; padding-top: 15px; padding-bottom: 5px;">KOMISI PEMILIHAN RAYA MAHASISWA<br> UNIVERSITAS SEMARANG</h1>
+        <h1 class="text-center white" style="margin: 10px auto; padding-top: 15px; padding-bottom: 5px;">{{ strtoupper($set->whereName('header')->first()->value) }}<br> UNIVERSITAS SEMARANG</h1>
         <hr class="white">
         {{-- <h2 class="white text-center"><strong style="border-bottom: 1px solid #fff;">SELAMAT DATANG</strong></h2> --}}
-        <p class="white text-center" style="font-weight: 700; font-size: 18px;"><span style="border-bottom: 1px solid #fff;">{{ is_null($mhs) ? '' : $mhs->name }}</span></p>
+        <p class="white text-center" style="font-weight: 700; font-size: 18px;"><span style="border-bottom: 1px solid #fff;">{{ is_null($mhs) ? '' : ucwords($mhs->name) }}</span></p>
         {{-- <h4 class="white text-center"><strong>Gunakan HAK Suara Anda Untuk Memilih</strong></h4> --}}
         <div class="container">
             <div class="row">
@@ -65,7 +71,7 @@
                 @endif
                     <div class="panel panel-default">
                         <div class="panel-body height">
-                            <h3 class="white text-center" style="border-bottom: 1px solid #fff;">Kode Pemilih</h3>
+                            <h2 class="white text-center" style="border-bottom: 1px solid #fff;">Kode Pemilih</h2>
                             {{ Form::open(['route' => 'home', 'method' => 'GET']) }}
                                 <div class="form-group">
                                     <input type="text" name="kode" class="form-control" placeholder="Masukkan Kode, Contoh: 1234" autofocus="" required title="Mohon Diisi">
@@ -80,14 +86,10 @@
                 <div class="col-md-8 col-sm-8 col-xs-12">
                     <div class="panel panel-default">
                         <div class="panel-body height white">
-                            <h3 style="border-bottom: 1px solid #fff;">Tata Cara Pemilihan</h3>
-                            <ol>
-                                <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto ducimus distinctio consequuntur, ipsam aperiam, hic similique. Rerum quos id officiis, repellendus! Aperiam vitae ipsa quisquam non animi cupiditate facilis nostrum?</li>
-                                <li>Dicta voluptatibus commodi dolorum aliquid odit dolore temporibus quidem tempora doloribus rerum tempore, natus omnis voluptas architecto aperiam, molestias dolor earum aspernatur voluptate. Eum aperiam, repellendus in iure, sed consequuntur.</li>
-                                <li>Labore ex, quos ut autem aspernatur reprehenderit, sed eligendi, fuga eum maiores sapiente fugiat libero corporis perferendis dolor quibusdam natus? Molestias aliquam voluptas omnis, aliquid quisquam dolorum rem reiciendis assumenda!</li>
-                                <li>Enim similique itaque saepe quae porro magnam quibusdam rerum ipsa fuga aut, natus laborum totam ipsum aliquid maiores alias dolor, debitis quasi ut laudantium. Tempora asperiores, magnam temporibus accusantium officiis.</li>
-                                <li>Illum impedit expedita, aliquam, quod ducimus quaerat assumenda aperiam quam, dicta incidunt totam modi quae nobis quos provident error! Sapiente maiores enim in porro dignissimos vel autem fugiat, voluptas consequuntur.</li>
-                            </ol>
+                            <h2 style="border-bottom: 1px solid #fff;">Tata Cara Pemilihan</h2>
+                            <h3 class="content">
+                            {!! $set->whereName('cara-memilih')->first()->value !!}
+                            </h3>
                         </div>
                     </div>
                 </div>
@@ -103,12 +105,12 @@
                         <div class="panel-body">
                             <p class="white text-center"><span style="font-size: 32px; font-weight: 700; margin: 5px; padding: 10px 20px; border-radius: 50%; background: #acacac;">{{ $no }}</span></p>
                             <div class="row">
-                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
                                     <img src="{{ asset('uploads/'.$calon->image) }}" alt="" class="tengah img-responsive img-thumbs">
                                     <h4 class="text-center white"><strong>KETUA</strong></h4>
                                     <p class="text-center white"><b>{{ $calon->name }}</b></p>
                                 </div>
-                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
                                     <img src="{{ asset('uploads/'.$calon->wimage) }}" alt="" class="tengah img-responsive img-thumbs">
                                     <h4 class="text-center white"><strong>WAKIL</strong></h4>
                                     <p class="text-center white"><b>{{ $calon->wname }}</b></p>
@@ -173,27 +175,30 @@
                 }, 1000);
             }
             window.onload = function () {
-                var menitan = 15 * 1,
+                var menitan = {{ intval($set->whereName('detik')->first()->value) }} * 1,
                     display = document.querySelector('#time');
                 startTimer(menitan, display);
             };
             @endif
             $(document).ready(function () {
+                @if (is_null($mhs))
                 $(".alert").fadeTo(4000, 1).slideUp(500, function () {
                     $(this).slideUp(500);
                     setTimeout(function () {
-                        location.reload();
-                    }, 1000);
+                        window.location.href = "{{ route('home') }}";
+                    }, 2000);
                 });
+                @endif
                 @if (!is_null($mhs))
                 setTimeout(function () {
                     $.post("{{ route('golput') }}", {id: "{{ $mhs->id }}"});
                     setTimeout(function () {
                         window.location.href = "{{ route('home') }}";
                     }, 2000);
-                }, 13000);
-            @endif
+                }, {{ intval($set->whereName('detik')->first()->value - 2) }}000);
+                @endif
             });
         </script>
     </body>
 </html>
+

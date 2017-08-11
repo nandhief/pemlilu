@@ -7,7 +7,7 @@
             data-slide-speed="200">
             <li class="{{ is_null($request->segment(2)) ? 'active' : '' }}">
                 <a href="{{ route('dashboard') }}">
-                    <i class="fa fa-wrench"></i>
+                    <i class="fa fa-dashboard"></i>
                     <span class="title">@lang('quickadmin.dashboard')</span>
                 </a>
             </li>
@@ -32,6 +32,12 @@
                 <a href="{{ route('mhs.index') }}">
                     <i class="fa fa-list-alt"></i>
                     <span class="title">Mahasiswa</span>
+                </a>
+            </li>
+            <li class="{{ $request->segment(2) == 'settings' ? 'active' : '' }}">
+                <a href="{{ route('settings.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span class="title">Settings</span>
                 </a>
             </li>
             @endif
