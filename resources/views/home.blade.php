@@ -75,7 +75,7 @@
                             @forelse ($onprogres as $onp)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td>{{ $onp->nim }}</td>
+                                    <td class="kode">{{ $onp->nim }}</td>
                                     <td>{{ $onp->name }}</td>
                                     <td>
                                         {{-- {{ Form::open(['route' => ['proses', $onp->id], 'method' => 'POST']) }}
@@ -86,8 +86,8 @@
                                             function open{{ $onp->id }}() {
                                                 var myWindow=window.open();
                                                 myWindow.document.close();
-                                                myWindow.document.write('<style> @media print {@font-face {font-family: KODE; src: url({{ url('assets/fonts/consolab.ttf') }}); } .kode {font-family: KODE; } .table {width:100%; } .solid {border: 1px solid; } .dashed {border: 1px dashed; margin: auto 10px; } td, th {text-align: center; } } </style>');
-                                                myWindow.document.write('<table class="table"> <tr> <td class="solid"> <h2>{{ ucwords($onp->nim) }}</h2> <hr> <p><strong>KODE</strong></p> <h1 class="kode">{{ $onp->kode }}</h1> </td> <td><span class="dashed"></span></td> <td class="solid"> <h2>{{ ucwords($onp->nim) }}</h2> <hr> <p><strong>KODE</strong></p> <h1 class="kode">{{ $onp->kode }}</h1> </td> <td><span class="dashed"></span></td> <td class="solid"> <h2>{{ ucwords($onp->nim) }}</h2> <hr> <p><strong>KODE</strong></p> <h1 class="kode">{{ $onp->kode }}</h1> </td> <td><span class="dashed"></span></td> <td class="solid"> <h2>{{ ucwords($onp->nim) }}</h2> <hr> <p><strong>KODE</strong></p> <h1 class="kode">{{ $onp->kode }}</h1> </td> </tr> </table>');
+                                                myWindow.document.write('<style> @media print {.kode {font-family: Consolas, Roboto Mono, Monaco, Monospace; font-size: 72px; } .table {width:100%; } .solid {border: 1px solid; } .dashed {border: 1px dashed; margin: auto 20px; } td, th {text-align: center; } p, h4 {margin: 0px; } } </style>');
+                                                myWindow.document.write('<table class="table"> <tr> <td class="solid"> <h4>{{ ucwords($onp->nim) }}<br><small>{{ $onp->name }}</small></h4> <hr> <p><strong>KODE</strong></p> <p class="kode"><strong>{{ $onp->kode }}</strong></p> </td> <td><span class="dashed"></span></td> <td class="solid">  <h4>{{ ucwords($onp->nim) }}<br><small>{{ $onp->name }}</small></h4> <hr> <p><strong>KODE</strong></p> <p class="kode"><strong>{{ $onp->kode }}</strong></p>  </td> <td><span class="dashed"></span></td> <td class="solid">  <h4>{{ ucwords($onp->nim) }}<br><small>{{ $onp->name }}</small></h4> <hr> <p><strong>KODE</strong></p> <p class="kode"><strong>{{ $onp->kode }}</strong></p> </td> <td><span class="dashed"></span></td> <td class="solid">  <h4>{{ ucwords($onp->nim) }}<br><small>{{ $onp->name }}</small></h4> <hr> <p><strong>KODE</strong></p> <p class="kode"><strong>{{ $onp->kode }}</strong></p> </td> </tr> </table>');
                                                 myWindow.focus();
                                                 myWindow.print();
                                                 myWindow.close();
@@ -145,8 +145,8 @@
                                             function open{{ $onp->id }}() {
                                                 var myWindow=window.open();
                                                 myWindow.document.close();
-                                                myWindow.document.write('<style> @media print {@font-face {font-family: KODE; src: url({{ url('assets/fonts/consolab.ttf') }}); } .kode {font-family: KODE; } .table {width:100%; } .solid {border: 1px solid; } .dashed {border: 1px dashed; margin: auto 10px; } td, th {text-align: center; } } </style>');
-                                                myWindow.document.write('<table class="table"> <tr> <td class="solid"> <h2>{{ ucwords($onp->nim) }}</h2> <hr> <p><strong>KODE</strong></p> <h1 class="kode">{{ $onp->kode }}</h1> </td> <td><span class="dashed"></span></td> <td class="solid"> <h2>{{ ucwords($onp->nim) }}</h2> <hr> <p><strong>KODE</strong></p> <h1 class="kode">{{ $onp->kode }}</h1> </td> <td><span class="dashed"></span></td> <td class="solid"> <h2>{{ ucwords($onp->nim) }}</h2> <hr> <p><strong>KODE</strong></p> <h1 class="kode">{{ $onp->kode }}</h1> </td> <td><span class="dashed"></span></td> <td class="solid"> <h2>{{ ucwords($onp->nim) }}</h2> <hr> <p><strong>KODE</strong></p> <h1 class="kode">{{ $onp->kode }}</h1> </td> </tr> </table>');
+                                                myWindow.document.write('<style> @media print {.kode {font-family: Consolas, Roboto Mono, Monaco, Monospace; font-size: 72px; } .table {width:100%; } .solid {border: 1px solid; } .dashed {border: 1px dashed; margin: auto 20px; } td, th {text-align: center; } p, h4 {margin: 0px; } } </style>');
+                                                myWindow.document.write('<table class="table"> <tr> <td class="solid"> <h4>{{ ucwords($onp->nim) }}<br><small>{{ $onp->name }}</small></h4> <hr> <p><strong>KODE</strong></p> <p class="kode"><strong>{{ $onp->kode }}</strong></p> </td> <td><span class="dashed"></span></td> <td class="solid">  <h4>{{ ucwords($onp->nim) }}<br><small>{{ $onp->name }}</small></h4> <hr> <p><strong>KODE</strong></p> <p class="kode"><strong>{{ $onp->kode }}</strong></p>  </td> <td><span class="dashed"></span></td> <td class="solid">  <h4>{{ ucwords($onp->nim) }}<br><small>{{ $onp->name }}</small></h4> <hr> <p><strong>KODE</strong></p> <p class="kode"><strong>{{ $onp->kode }}</strong></p> </td> <td><span class="dashed"></span></td> <td class="solid">  <h4>{{ ucwords($onp->nim) }}<br><small>{{ $onp->name }}</small></h4> <hr> <p><strong>KODE</strong></p> <p class="kode"><strong>{{ $onp->kode }}</strong></p> </td> </tr> </table>');
                                                 myWindow.focus();
                                                 myWindow.print();
                                                 myWindow.close();
@@ -264,7 +264,7 @@
 
 @section('style')
     <style>
-        @font-face {font-family: KODE; src: url({{ url('assets/fonts/consolab.ttf') }}); } .kode {font-family: KODE; } .table {width:100%; } .solid {border: 1px solid; } .dashed {border: 1px dashed; margin: auto 10px; } td, th {text-align: center; }
+        @font-face {font-family: KODE; src: url({{ url('assets/fonts/consolab.ttf') }}); } .kode {font-family: KODE, Consolas, Roboto Mono, Monaco, Monospace; } .table {width:100%; } .solid {border: 1px solid; } .dashed {border: 1px dashed; margin: auto 10px; } td, th {text-align: center; }
     </style>
 @stop
 
