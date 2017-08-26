@@ -14,7 +14,7 @@
 
         <div class="top-menu">
             <ul class="nav navbar-nav pull-right">
-
+              <li class="hidden-xs"><button type="button" class="btn btn-link" style="margin-top: 5px; text-decoration: none; color: #fff;"><strong>{{ strtoupper(auth()->user()->roles()->first()->title) }}</strong> | <i class="fa fa-user"></i> {{ ucwords(auth()->user()->name) }}</button></li>
             </ul>
         </div>
     </div>

@@ -10,23 +10,19 @@
 
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <table class="table table-bordered table-striped">
                         <tr>
                             <th>Nama Ketua</th>
                             <td>{{ $calon->name }}</td>
+                            <th>Nama Wakil</th>
+                            <td>{{ $calon->wname }}</td>
                         </tr>
                         <tr>
                             <th>Foto Ketua</th>
                             <td>
                                 <img src="{{ url('uploads/'.$calon->image) }}" alt="{{ $calon->image }}" class="img-responsive img-thumbnail">
                             </td>
-                        </tr>
-                        <tr>
-                            <th>Nama Wakil</th>
-                            <td>{{ $calon->wname }}</td>
-                        </tr>
-                        <tr>
                             <th>Foto Wakil</th>
                             <td>
                                 <img src="{{ url('uploads/'.$calon->wimage) }}" alt="{{ $calon->wimage }}" class="img-responsive img-thumbnail">

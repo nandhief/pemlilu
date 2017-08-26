@@ -50,7 +50,7 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('role_id', 'Role*', ['class' => 'control-label']) !!}
-                    {!! Form::select('role_id', $roles, old('role_id'), ['class' => 'form-control select2']) !!}
+                    {!! Form::select('role_id', $roles, $user->roles->first()->id, ['class' => 'form-control select2']) !!}
                     <p class="help-block"></p>
                     @if($errors->has('role_id'))
                         <p class="help-block">
