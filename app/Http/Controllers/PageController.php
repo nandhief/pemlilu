@@ -11,6 +11,9 @@ class PageController extends Controller
 {
     public function index(Request $request)
     {
+        if (auth()->check()) {
+            return redirect()->route('dashboard');
+        }
     	if (!empty($request->kode)) {
             $mhs = Mahasiswa::where([['status', false], ['kode', $request->kode]])->whereGolput(false)->first();
             if (empty($mhs)) {

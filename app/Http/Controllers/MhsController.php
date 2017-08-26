@@ -39,7 +39,9 @@ class MhsController extends Controller
         if ($request->hasFile('mhs')) {
             $data = \Excel::load($request->mhs, function () {})->get();
             foreach ($data->toArray() as $res) {
-                Mahasiswa::create($res);
+                if (is_null(Mahasiswa::whereNim($res['nim'])->first())) {
+                    Mahasiswa::create($res);
+                }
             }
             session()->flash('message', 'Berhasil Import data mahasiswa');
         } else {
