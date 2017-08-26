@@ -43,9 +43,9 @@
                 border-radius: 0px;
             }
             .height {
-                height: auto;
+                min-height: 400px;
             }
-            .form-control, .alert, .btn {
+            .form-control, .alert, .btn, .modal-content {
                 border-radius: 0px;
             }
             .content {
@@ -57,7 +57,7 @@
         <h1 class="text-center white" style="margin: 10px auto; padding-top: 15px; padding-bottom: 5px;">{{ strtoupper($set->whereName('header')->first()->value) }}<br> UNIVERSITAS SEMARANG</h1>
         <hr class="white">
         {{-- <h2 class="white text-center"><strong style="border-bottom: 1px solid #fff;">SELAMAT DATANG</strong></h2> --}}
-        <p class="white text-center" style="font-weight: 700; font-size: 18px;"><span style="border-bottom: 1px solid #fff;">{{ is_null($mhs) ? '' : ucwords($mhs->name) }}</span></p>
+        <p class="white text-center" style="font-weight: 700; font-size: 32px;"><span style="border-bottom: 1px solid #fff;">{{ is_null($mhs) ? '' : ucwords($mhs->name) }}</span></p>
         {{-- <h4 class="white text-center"><strong>Gunakan HAK Suara Anda Untuk Memilih</strong></h4> --}}
         <div class="container">
             <div class="row">
@@ -152,8 +152,7 @@
                 @endif
             </div>
             @if (!is_null($mhs))
-            <h3 class="white text-center">WAKTU MEMILIH</h3>
-            <h3 class="text-center white" id="time"></h3>
+            <h2 class="white text-center">WAKTU MEMILIH : <span id="time"></span></h2>
             @endif
         </div>
 

@@ -20,3 +20,5 @@
 <link rel="stylesheet" href="{{ asset('datatables/extension') }}/css/buttons.dataTables.min.css"/>
 <link rel="stylesheet" href="{{ asset('timepicker') }}/jquery-ui-timepicker-addon.min.css"/>
 <link rel="stylesheet" href="{{ asset('datepicker') }}/css/bootstrap-datepicker3.standalone.min.css"/>
+
+@yield('style')

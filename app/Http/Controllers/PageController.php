@@ -15,7 +15,7 @@ class PageController extends Controller
             $mhs = Mahasiswa::where([['status', false], ['kode', $request->kode]])->whereGolput(false)->first();
             if (empty($mhs)) {
                 $data = Mahasiswa::where('kode', $request->kode)->whereGolput(false)->first();
-                session()->flash('error', 'Mohon reload browser');
+                session()->flash('error', 'Mohon Hubungi Panitia');
                 if (empty($data)) {
                     session()->flash('error', 'Kode salah');
                 }
@@ -31,8 +31,8 @@ class PageController extends Controller
     {
         $mahasiswa = Mahasiswa::whereNull('kode')->get();
         $onprogres = Mahasiswa::whereNotNull('kode')->whereNull('status')->orderBy('updated_at', 'asc')->get();
-        $kode = Mahasiswa::whereNotNull('kode')->where([['status', false]])->orderBy('updated_at', 'asc')->get();
-        $selesai = Mahasiswa::whereNotNull('kode')->where([['status', true]])->orderBy('updated_at', 'desc')->get();
+        $kode = Mahasiswa::whereNotNull('kode')->where('status', false)->orderBy('updated_at', 'asc')->get();
+        $selesai = Mahasiswa::whereNotNull('kode')->where('status', true)->orderBy('updated_at', 'desc')->get();
         return view('home', compact('mahasiswa', 'kode', 'onprogres', 'selesai'));
     }
 
@@ -64,7 +64,7 @@ class PageController extends Controller
     public function golput(Request $request)
     {
         $mhs = Mahasiswa::find($request->id)->update(['golput' => true, 'status' => true]);
-        dd($mhs);
+        return session()->flash('error', 'Terima Kasih sudah Golput');
     }
 
     public function quick(Request $request)
