@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'PageController@index')->name('home');
+Route::get('antrian', 'PageController@antrian')->name('antrian');
 Route::post('antri/{id}', 'PageController@antri')->name('antri');
 Route::post('proses/{id}', 'PageController@proses')->name('proses');
 Route::post('memilih/{calon}/{mhs}', 'PageController@memilih')->name('memilih');

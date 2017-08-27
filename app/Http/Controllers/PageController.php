@@ -51,6 +51,15 @@ class PageController extends Controller
         return redirect()->back();
     }
 
+    public function antrian()
+    {
+        $onprogres = Mahasiswa::whereNotNull('kode')->whereNull('status')->orderBy('updated_at', 'asc')->limit(8)->get();
+        if (request()->ajax()) {
+            return response()->json($onprogres, 200);
+        }
+        return view('antrian', compact('onprogres'));
+    }
+
     public function proses(Request $request, $id)
     {
         $mhs = Mahasiswa::find($id)->update(['status' => false]);
