@@ -1,3 +1,5 @@
+@inject('set', 'App\Setting')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,6 +32,9 @@
             letter-spacing: 6px;
             margin: 1.1em 0;
             text-align: center;
+        }
+        td, th {
+        	font-size: 24px;
         }
         .white {
             color: #fff;
@@ -188,143 +193,102 @@
 	<br>
 	<br>
 	<div class="">
-		{{-- <div class="row"> --}}
-			<section class="background">
-				<div class="row">
-					<div class="col-md-12 col-sm-12">
-						<div class="content-wrapper">
-							<h1>PEMILIHAN PRESIDEN MAHASISWA TAHUN 2017</h1>
+		<section class="background">
+			<div class="row">
+				<div class="col-md-12 col-sm-12">
+					<div class="content-wrapper">
+						<h1>PEMILIHAN PRESIDEN MAHASISWA TAHUN 2017</h1>
+						<h1>UNIVERSITAS SEMARANG</h1>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="background">
+		<div class="row">
+			<div class="col-sm-12 col-md-12">
+				<div class="content-wrapper">
+	        		<div class="panel panel-default">
+	        			<div class="panel-body">
+        					<h1 class="white text-center" style="margin: 10px auto;">JUMLAH MAHASISWA {{ number_format(count($all = $mhs->get()), 0,',','.') }}</h1>
+	        			</div>
+	        			<table class="table table-stripped">
+	        				<thead>
+	        					<tr>
+	        						<th class="text-center">FAKULTAS</th>
+	        						<th class="text-center">JUMLAH SISWA</th>
+	        					</tr>
+	        				</thead>
+	        				<tbody>
+	        					@foreach ($all->keyBy('fakultas')->sortBy('fakultas') as $data)
+	        					<tr>
+	        						<td><strong>{{ $data->fakultas }}</strong></td>
+	        						<td><strong>{{ $all->where('fakultas', $data->fakultas)->count() }}</strong></td>
+	        					</tr>
+	        					@endforeach
+	        				</tbody>
+	        			</table>
+	        		</div>
+        		</div>
+			</div>
+		</div>
+		@if (strtolower($set->whereName('count')->first()->value) == 'on')
+		</section>
+		<section class="background">
+		<div class="row">
+			<div class="col-md-5 col-md-offset-1">
+				<div class="content-wrapper">
+	                <div class="panel panel-default">
+	                	<div class="panel-body height">
+	                		<canvas id="barChart" style="height:230px"></canvas>
+	                	</div>
+	                </div>
+                </div>
+			</div>
+			<div class="col-md-5">
+				<div class="content-wrapper">
+					@foreach ($calons as $calon)
+					<div class="panel panel-default">
+						<div class="panel-body height">
+							<p style="font-size: 24px; margin: 0px;"><strong>Calon No {{ $calon->nomor }} : {{ $all->where('calon_id', $calon->id)->count() }} SUARA</strong></p>
+						</div>
+					</div>
+					@endforeach
+					<div class="panel panel-default">
+						<div class="panel-body height">
+							<p style="font-size: 24px; margin: 0px;"><strong>Golput : {{ $all->where('golput', true)->count() }} SUARA</strong></p>
 						</div>
 					</div>
 				</div>
-			</section>
-			<section class="background">
-			<div class="row">
-				<div class="col-sm-12 col-md-12">
-					<div class="content-wrapper">
-		        		<div class="panel panel-default">
-		        			<div class="panel-body">
-            					<h1 class="white text-center">Jumlah Mahasiswa<br> {{ count($mhs) }}</h1>
-		        			</div>
-		        		</div>
-	        		</div>
-				</div>
 			</div>
-			</section>
-			<section class="background">
-			<div class="row">
-				<div class="col-md-6 col-md-offset-1 col-sm-6 col-md-offset-1">
-					<div class="content-wrapper">
-		                <div class="panel panel-default">
-		                	<div class="panel-body height">
-		                		<canvas id="barChart" style="height:230px"></canvas>
-		                	</div>
-		                </div>
-	                </div>
-				</div>
-			</div>
-			</section>
-			<section class="background">
-			<div class="row">
-				<div class="col-md-6 col-md-offset-1 col-sm-6 col-md-offset-1">
-					<div class="content-wrapper">
-		                <div class="panel panel-default">
-		                	<div class="panel-body height">
-		                		<canvas id="pieChart" style="height:250px"></canvas>
-		                	</div>
-		                </div>
-	                </div>
-				</div>
-			</div>
-			</section>
-		{{-- </div> --}}
+		</div>
+		</section>
+		@endif
 	</div>
 
 
-	<script src='http://test.dev/lodash.min.js'></script>
+    <script src="{{ asset('assets/js/lodash.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('chartjs/Chart.min.js') }}"></script>
     <script>
     	$(document).ready(function() {
 			//-------------
-			//- PIE CHART -
-			//-------------
-			// Get context with jQuery - using jQuery's .get() method.
-			var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
-			var pieChart = new Chart(pieChartCanvas);
-			var PieData = [
-				{
-					value: 700,
-					color: "#f56954",
-					highlight: "#f56954",
-					label: "Calon No 1"
-				},
-				{
-					value: 500,
-					color: "#00a65a",
-					highlight: "#00a65a",
-					label: "Calon No 2"
-				},
-				{
-					value: 100,
-					color: "#00ffff",
-					highlight: "#00ffff",
-					label: "Golput"
-				}
-			];
-			var pieOptions = {
-				//Boolean - Whether we should show a stroke on each segment
-				segmentShowStroke: false,
-				//String - The colour of each segment stroke
-				segmentStrokeColor: "rgba(255, 255, 255, 0.5)",
-				//Number - The width of each segment stroke
-				segmentStrokeWidth: 2,
-				//Number - The percentage of the chart that we cut out of the middle
-				percentageInnerCutout: 0, // This is 0 for Pie charts
-				//Number - Amount of animation steps
-				animationSteps: 100,
-				//String - Animation easing effect
-				animationEasing: "easeOutBounce",
-				//Boolean - Whether we animate the rotation of the Doughnut
-				animateRotate: true,
-				//Boolean - Whether we animate scaling the Doughnut from the centre
-				animateScale: false,
-				//Boolean - whether to make the chart responsive to window resizing
-				responsive: true,
-				// Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-				maintainAspectRatio: true,
-				//String - A legend template
-				legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-			};
-			//Create pie or douhnut chart
-			// You can switch between pie and douhnut using the method below.
-			pieChart.Doughnut(PieData, pieOptions);
-
-			//-------------
 		    //- BAR CHART -
 		    //-------------
 		    var areaChartData = {
 				labels: ["PEMILIHAN PRESIDEN MAHASISWA USM"],
 				datasets: [
+					@foreach ($calons as $calon)
 					{
-						label: "Calon 1",
-						fillColor: "#aaa111",
-						pointColor: "#aaa111",
+						label: "Calon No {{ $calon->nomor }}",
+						fillColor: "{{ $color = $fake->hexcolor }}",
+						pointColor: "{{ $color }}",
 						pointStrokeColor: "#c1c7d1",
 						pointHighlightFill: "#fff",
 						pointHighlightStroke: "rgba(220,220,220,1)",
-						data: [700]
+						data: [{{ $all->where('calon_id', $calon->id)->count() }}]
 					},
-					{
-						label: "Calon 2",
-						fillColor: "#222bbb",
-						pointColor: "#222bbb",
-						pointStrokeColor: "#c1c7d1",
-						pointHighlightFill: "#fff",
-						pointHighlightStroke: "rgba(220,220,220,1)",
-						data: [550]
-					},
+					@endforeach
 					{
 						label: "Golput",
 						fillColor: "#c3c3c3",
@@ -332,7 +296,7 @@
 						pointStrokeColor: "#c1c7d1",
 						pointHighlightFill: "#fff",
 						pointHighlightStroke: "rgba(220,220,220,1)",
-						data: [200]
+						data: [{{ $all->where('golput', true)->count() }}]
 					}
 				]
 			};
@@ -370,8 +334,8 @@
 		    barChartOptions.datasetFill = false;
 		    barChart.Bar(barChartData, barChartOptions);
     	});
-    </script>
-    <script>
+
+
 		// ------------- VARIABLES ------------- //
 		var ticking = false;
 		var isFirefox = (/Firefox/i.test(navigator.userAgent));

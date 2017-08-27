@@ -85,4 +85,12 @@ class PageController extends Controller
         $golput = Mahasiswa::whereGolput(true)->get()->count();
         return view('quick', compact('memilih', 'golput'));
     }
+
+    public function count()
+    {
+        $fake = \Faker\Factory::create('id_ID');
+        $mhs = new Mahasiswa;
+        $calons = Calon::orderBy('nomor')->get();
+        return view('count', compact('mhs', 'calons', 'fake'));
+    }
 }
