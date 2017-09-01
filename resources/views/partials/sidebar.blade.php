@@ -40,6 +40,12 @@
                     <span class="title">Settings</span>
                 </a>
             </li>
+            <li class="{{ $request->segment(2) == 'logs' ? 'active' : '' }}">
+                <a href="{{ route('log') }}">
+                    <i class="fa fa-exchange"></i>
+                    <span class="title">Log</span>
+                </a>
+            </li>
             @endif
             @if(strtolower(auth()->user()->roles()->first()->title) == 'administrator')
             <li class="">

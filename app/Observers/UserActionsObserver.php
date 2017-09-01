@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use Auth;
-use App\UserAction;
+use App\Log;
 
 class UserActionsObserver
 {
@@ -17,8 +17,8 @@ class UserActionsObserver
             $action = 'updated';
         }
         if (Auth::check()) {
-            UserAction::create([
-                'user_name'     => Auth::user()->name,
+            Log::create([
+                'user_id'     => Auth::user()->id,
                 'action'        => $action,
                 'action_model'  => $model->getTable(),
                 'action_id'     => $model->id
@@ -26,12 +26,11 @@ class UserActionsObserver
         }
     }
 
-
     public function deleting($model)
     {
         if (Auth::check()) {
-            UserAction::create([
-                'user_name'     => Auth::user()->id,
+            Log::create([
+                'user_id'     => Auth::user()->id,
                 'action'        => 'deleted',
                 'action_model'  => $model->getTable(),
                 'action_id'     => $model->id

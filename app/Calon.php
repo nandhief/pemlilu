@@ -13,6 +13,12 @@ class Calon extends Model
     	'name', 'image', 'wname', 'wimage',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+        Calon::observe(new \App\Observers\UserActionsObserver);
+    }
+
     public function mahasiswas()
     {
     	return $this->hasMany(Mahasiswa::class);

@@ -28,6 +28,7 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 	Route::get('/', 'PageController@dashboard')->name('dashboard');
 	Route::get('quick-count', 'PageController@quick')->name('quick');
+	Route::get('logs', 'LogController@index')->name('log');
 	Route::resource('calons', 'CalonController');
 	Route::resource('mhs', 'MhsController');
 	Route::resource('users', 'UsersController');

@@ -30,6 +30,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+        User::observe(new \App\Observers\UserActionsObserver);
+    }
+
     public function setPasswordAttribute($input)
     {
         if ($input)
