@@ -15,7 +15,7 @@
             <table class="table table-bordered table-striped" id="{{ count($mahasiswa) > 0 ? 'datatables' : '' }}">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>No</th>
                         <th>Nim</th>
                         <th>Nama</th>
                         <th>Fakultas</th>
@@ -43,6 +43,35 @@
                     { data: 'kode', name: 'kode' },
                     { data: 'status', name: 'status' },
                     { data: 'action', name: 'action', orderable: false, searchable: false }
+                ],
+                retrieve: true,
+                dom: 'Bfrtip<"actions">',
+                buttons: [
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    'colvis'
                 ]
             });
         });
