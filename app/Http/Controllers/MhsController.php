@@ -15,6 +15,17 @@ class MhsController extends Controller
     public function index()
     {
         $mahasiswa = Mahasiswa::get();
+        if (request()->ajax()) {
+            $no = 1;
+            foreach ($mahasiswa->toArray() as $r) {
+                $r['no'] = $no++;
+                $r['status'] = (is_null($r['status']) ? 'Belum' : ($r['status'] == false ? 'Antri' : 'Sudah')) . ' Memilih';
+                $r['action'] = "<a href='". route('mhs.show',$r['id']) ."' class='btn btn-xs btn-primary'>Lihat</a> <a href='". route('mhs.edit',$r['id']) ."' class='btn btn-xs btn-info'>Edit</a><form method='POST' action='". route('mhs.destroy', $r['id']) ."' accept-charset='UTF-8' style='display: inline-block;'><input name='_method' type='hidden' value='DELETE'><input name='_token' type='hidden' value='". csrf_token() ."'> <input class='btn btn-xs btn-danger' type='submit' value='Hapus'> </form> ";
+                $mhs[] = (object) $r;
+            }
+            $data = collect($mhs);
+            return response()->json(compact('data'));
+        }
         return view('mhs.index', compact('mahasiswa'));
     }
 

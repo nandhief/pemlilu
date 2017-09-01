@@ -18,10 +18,10 @@ class UserActionsObserver
         }
         if (Auth::check()) {
             UserAction::create([
-                'user_id'      => Auth::user()->id,
-                'action'       => $action,
-                'action_model' => $model->getTable(),
-                'action_id'    => $model->id
+                'user_name'     => Auth::user()->name,
+                'action'        => $action,
+                'action_model'  => $model->getTable(),
+                'action_id'     => $model->id
             ]);
         }
     }
@@ -31,10 +31,10 @@ class UserActionsObserver
     {
         if (Auth::check()) {
             UserAction::create([
-                'user_id'      => Auth::user()->id,
-                'action'       => 'deleted',
-                'action_model' => $model->getTable(),
-                'action_id'    => $model->id
+                'user_name'     => Auth::user()->id,
+                'action'        => 'deleted',
+                'action_model'  => $model->getTable(),
+                'action_id'     => $model->id
             ]);
         }
     }

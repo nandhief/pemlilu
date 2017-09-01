@@ -24,28 +24,6 @@
                                     <th>INFO</th>
                                 </tr>
                             </thead>
-                            <tbdoy>
-                                @php
-                                    $no = 1;
-                                @endphp
-                                @forelse ($mahasiswa as $mhs)
-                                <tr>
-                                    <td>{{ $no++ }}</td>
-                                    <td>{{ $mhs->nim }}</td>
-                                    <td>{{ $mhs->name }}</td>
-                                    <td>{{ $mhs->fakultas }}</td>
-                                    <td>
-                                        {{ Form::open(['route' => ['antri', $mhs->id], 'method' => 'POST']) }}
-                                            {{ Form::submit('Antri', ['class' => 'btn btn-xs btn-info']) }}
-                                        {{ Form::close() }}
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="5">Tidak ada data</td>
-                                </tr>
-                                @endforelse
-                            </tbdoy>
                         </table>
                     </div>
                 </div>
@@ -78,9 +56,6 @@
                                     <td class="kode">{{ $onp->nim }}</td>
                                     <td>{{ $onp->name }}</td>
                                     <td>
-                                        {{-- {{ Form::open(['route' => ['proses', $onp->id], 'method' => 'POST']) }}
-                                            {{ Form::submit('Memilih', ['class' => 'btn btn-xs btn-success']) }}
-                                        {{ Form::close() }} --}}
                                         <button type="button" class="btn btn-xs btn-success" onclick="open{{ $onp->id }}()">Cetak</button>
                                         <script>
                                             function open{{ $onp->id }}() {
@@ -137,9 +112,6 @@
                                     <td>{{ $onp->name }}</td>
                                     <td class="kode">{{ $onp->kode }}</td>
                                     <td>
-                                        {{-- {{ Form::open(['route' => ['proses', $onp->id], 'method' => 'POST']) }}
-                                            {{ Form::submit('Memilih', ['class' => 'btn btn-xs btn-success']) }}
-                                        {{ Form::close() }} --}}
                                         <button type="button" class="btn btn-xs btn-success" onclick="open{{ $onp->id }}()">Cetak</button>
                                         <script>
                                             function open{{ $onp->id }}() {
@@ -193,7 +165,18 @@
                                     <td>{{ $kd->name }}</td>
                                     <td class="kode">{{ $kd->kode }}</td>
                                     <td>
-                                        <button class="btn btn-xs btn-warning">{{ $kd->status == 0 ? 'Proses' : '' }}</button>
+                                        <button class="btn btn-xs btn-warning" type="button" onclick="open{{ $kd->id }}()">{{ $kd->status == 0 ? 'Proses' : '' }}</button>
+                                        <script>
+                                            function open{{ $kd->id }}() {
+                                                var myWindow=window.open();
+                                                myWindow.document.close();
+                                                myWindow.document.write('<style> @media print {.kode {font-family: Consolas, Roboto Mono, Monaco, Monospace; font-size: 72px; } .table {width:100%; } .solid {border: 1px solid; } .dashed {border: 1px dashed; margin: auto 20px; } td, th {text-align: center; } p, h4 {margin: 0px; } } </style>');
+                                                myWindow.document.write('<table class="table"> <tr> <td class="solid"> <h4>{{ ucwords($kd->nim) }}<br><small>{{ $kd->name }}</small></h4> <hr> <p><strong>KODE</strong></p> <p class="kode"><strong>{{ $kd->kode }}</strong></p> </td> <td><span class="dashed"></span></td> <td class="solid">  <h4>{{ ucwords($kd->nim) }}<br><small>{{ $kd->name }}</small></h4> <hr> <p><strong>KODE</strong></p> <p class="kode"><strong>{{ $kd->kode }}</strong></p>  </td> <td><span class="dashed"></span></td> <td class="solid">  <h4>{{ ucwords($kd->nim) }}<br><small>{{ $kd->name }}</small></h4> <hr> <p><strong>KODE</strong></p> <p class="kode"><strong>{{ $kd->kode }}</strong></p> </td> <td><span class="dashed"></span></td> <td class="solid">  <h4>{{ ucwords($kd->nim) }}<br><small>{{ $kd->name }}</small></h4> <hr> <p><strong>KODE</strong></p> <p class="kode"><strong>{{ $kd->kode }}</strong></p> </td> </tr> </table>');
+                                                myWindow.focus();
+                                                myWindow.print();
+                                                myWindow.close();
+                                            }
+                                        </script>
                                     </td>
                                 </tr>
                             @empty
@@ -251,7 +234,8 @@
                 <div class="panel-heading">Informasi Mahasiswa USM</div>
                 <div class="panel-body">
                     <ul class="list-group">
-                        <li class="list-group-item"><strong>Total Mahasiswa</strong> <span class="badge">{{ $mahasiswa->count() }}</span></li>
+                        <li class="list-group-item"><strong>Total Mahasiswa</strong> <span class="badge">{{ $mahasiswa->count() + $onprogres->count() + $kode->count() }}</span></li>
+                        <li class="list-group-item"><strong>Total Belum Memilih</strong> <span class="badge">{{ $mahasiswa->count() }}</span></li>
                         <li class="list-group-item"><strong>Total Proses Memilih</strong> <span class="badge">{{ $onprogres->count() + $kode->count() }}</span></li>
                         <li class="list-group-item"><strong>Total Sudah Memilih</strong> <span class="badge">{{ $selesai->count() }}</span></li>
                     </ul>
@@ -271,7 +255,20 @@
 @section('javascript')
     <script>
         $(document).ready(function () {
-            $(".datatables").dataTable();
+            $(".datatables").dataTable({
+                @if(strtolower(auth()->user()->roles()->first()->title) == 'verifikasi')
+
+                ajax: "{!! route('dashboard') !!}",
+                "deferRender": true,
+                columns: [
+                    { data: 'no', name: 'no' },
+                    { data: 'nim', name: 'nim' },
+                    { data: 'name', name: 'name' },
+                    { data: 'fakultas', name: 'fakultas' },
+                    { data: 'action', name: 'action', orderable: false, searchable: false }
+                ]
+                @endif
+            });
         });
     </script>
 @stop

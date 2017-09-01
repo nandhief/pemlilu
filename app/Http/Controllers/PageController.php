@@ -30,12 +30,22 @@ class PageController extends Controller
     	return view('pemilu', compact('calons', 'mhs'));
     }
 
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         $mahasiswa = Mahasiswa::whereNull('kode')->get();
         $onprogres = Mahasiswa::whereNotNull('kode')->whereNull('status')->orderBy('updated_at', 'asc')->get();
         $kode = Mahasiswa::whereNotNull('kode')->where('status', false)->orderBy('updated_at', 'asc')->get();
         $selesai = Mahasiswa::whereNotNull('kode')->where('status', true)->orderBy('updated_at', 'desc')->get();
+        if (request()->ajax()) {
+            $no = 1;
+            foreach ($mahasiswa->toArray() as $r) {
+                $r['no'] = $no++;
+                $r['action'] = "<form method='POST' action='". route('antri', $r['id']) ."' accept-charset='UTF-8'><input name='_token' type='hidden' value='". csrf_token() ."'> <input class='btn btn-xs btn-info' type='submit' value='Antri'> </form> ";
+                $mhs[] = (object) $r;
+            }
+            $data = collect($mhs);
+            return response()->json(compact('data'));
+        }
         return view('home', compact('mahasiswa', 'kode', 'onprogres', 'selesai'));
     }
 

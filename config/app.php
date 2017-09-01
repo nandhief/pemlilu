@@ -171,6 +171,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -234,6 +235,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Datatables' => Yajra\Datatables\Facades\Datatables::class,
 
     ],
 
